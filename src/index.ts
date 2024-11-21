@@ -10,6 +10,7 @@ const ALIAS:Record<string,any> = {
     "js":  "javascript",
     "tsd": "typescript.d",
     "py":  "python",
+    "ph":  "php",
     "kt":  "kotlin",
     "vb":  "vbnet",
     "fs":  "fsharp",
@@ -345,10 +346,13 @@ ${tool} <file>                  Update existing ServiceStack Reference (e.g. dto
 ${tool} <lang>     <url> <file> Add ServiceStack Reference and save to file name
 ${tool} csharp     <url>        Add C# ServiceStack Reference            (Alias 'cs')
 ${tool} typescript <url>        Add TypeScript ServiceStack Reference    (Alias 'ts')
-${tool} swift      <url>        Add Swift ServiceStack Reference         (Alias 'sw')
+${tool} javascript <url>        Add JavaScript ServiceStack Reference    (Alias 'js')
+${tool} python     <url>        Add Python ServiceStack Reference        (Alias 'py')
+${tool} dart       <url>        Add Dart ServiceStack Reference          (Alias 'da')
+${tool} php        <url>        Add PHP ServiceStack Reference           (Alias 'ph')
 ${tool} java       <url>        Add Java ServiceStack Reference          (Alias 'ja')
 ${tool} kotlin     <url>        Add Kotlin ServiceStack Reference        (Alias 'kt')
-${tool} dart       <url>        Add Dart ServiceStack Reference          (Alias 'da')
+${tool} swift      <url>        Add Swift ServiceStack Reference         (Alias 'sw')
 ${tool} fsharp     <url>        Add F# ServiceStack Reference            (Alias 'fs')
 ${tool} vbnet      <url>        Add VB.NET ServiceStack Reference        (Alias 'vb')
 ${tool} tsd        <url>        Add TypeScript Definition ServiceStack Reference    
