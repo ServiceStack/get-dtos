@@ -6,8 +6,8 @@ import packageConf from '../package.json'
 const ALIAS:Record<string,any> = {
     "cs":  "csharp",
     "ts":  "typescript",
-    "mjs": "javascript",
-    "js":  "javascript",
+    "mjs": "mjs",
+    "js":  "mjs",
     "tsd": "typescript.d",
     "py":  "python",
     "ph":  "php",
@@ -17,12 +17,13 @@ const ALIAS:Record<string,any> = {
     "sw":  "swift",
     "ja":  "java",
     "da":  "dart",
+    "javascript":  "mjs",
 }
 const REF_EXT:Record<string,any> = {
     "csharp":       "dtos.cs",
     "typescript":   "dtos.ts",
     "typescript.d": "dtos.d.ts",
-    "javascript":   "dtos.mjs",
+    "mjs":          "dtos.mjs",
     "python":       "dtos.py",
     "dart":         "dtos.dart",
     "php":          "dtos.php",
