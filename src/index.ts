@@ -1,7 +1,6 @@
-var fs = require("fs")
-var path = require("path")
-var url = require("url")
-var packageConf = require('../package.json')
+import fs from "fs"
+import path from "path"
+import packageConf from '../package.json'
 
 // src/index.ts
 const ALIAS:Record<string,any> = {
@@ -50,7 +49,7 @@ type Command = {
     script?: { name:string, cwd:string }
 }
 
-export function parse(...args: string[]) : Command {
+export function parseArgs(...args: string[]) : Command {
     const ret:Command = { type: "help" }
     for (let i=0; i<args.length; i++) {
         const arg = args[i]
@@ -100,7 +99,7 @@ export function parse(...args: string[]) : Command {
             if (hasQs) ret.qs = queryString(arg.substring(arg.indexOf('?')))
             ret.type = "add"
             const localHosts = ["localhost","0.0.0.0","127.0.0.1","10.0.2.2","192.168.0.2"]
-            ret.ignoreSsl = ret.ignoreSsl || localHosts.some(host => arg.includes("://" + host))
+            if (localHosts.some(host => arg.includes("://" + host))) ret.ignoreSsl = true
             ret.out = REF_EXT[ret.lang!]
         } else if (LANG_EXTS.some(ext => arg.endsWith(ext))) {
             ret.out = arg
@@ -122,7 +121,7 @@ export async function cli(args: string[]) {
     const scriptNameExt = splitOnLast(cliPath.replace(/\\/g, '/'), '/')[1]
     const cmdArgs = args.slice(2)
     
-    const command = parse(...cmdArgs)
+    const command = parseArgs(...cmdArgs)
     command.script = { 
         name: splitOnLast(scriptNameExt, '.')[0],
         cwd: process.cwd()
@@ -169,7 +168,7 @@ export async function cli(args: string[]) {
                 let fileName = command.out ?? REF_EXT[command.lang!]
                 if (fs.existsSync(fileName)) {
                     // if exists create a new file name
-                    var parts = url.parse(typesUrl).host.split('.')
+                    var parts = new URL(typesUrl).host.split('.')
                     fileName = parts.length >= 2
                         ? parts[parts.length - 2]
                         : parts[0]
