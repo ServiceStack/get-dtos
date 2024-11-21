@@ -284,12 +284,16 @@ async function saveReference(lang:string, typesUrl:string, fileName:string) {
 async function execDefault(command:Command) {
 
     const { lang, script } = command
-    if (!lang)
+    if (!lang || !REF_EXT[lang])
         return
 
     const out = REF_EXT[lang]
     var matchingFiles:string[] = []
-    walk(script!.cwd).forEach(function (entry) {
+    const ignoreDirs = [
+        ".git", ".vscode", ".idea", "node_modules", "bin", "obj", "dist", "build", ".venv", "packages",
+        "gradle", "dart_tool", "vendor"
+    ]
+    walk(script!.cwd, ignoreDirs).forEach(function (entry) {
         if (entry.endsWith(out!)) {
             matchingFiles.push(entry)
         }
@@ -311,21 +315,23 @@ async function execDefault(command:Command) {
     }
 }
 
-function walk(dir:string) {
-    var results:string[] = [];
-    var list = fs.readdirSync(dir)
-    list.forEach(function (file:string) {
-        file = path.join(dir, file)
-        var stat = fs.statSync(file)
-        if (stat && stat.isDirectory()) {
-            /* Recurse into a subdirectory */
-            results = results.concat(walk(file))
-        }
-        else {
-            /* Is a file */
-            results.push(file)
-        }
-    })
+function walk(dir:string, ignoreDirs:string[]) {
+    var results:string[] = []
+    if (!ignoreDirs.some(ignoreDir => dir.endsWith(ignoreDir))) {
+        const list = fs.readdirSync(dir)
+        list.forEach(function (file:string) {
+            file = path.join(dir, file)
+            var stat = fs.statSync(file)
+            if (stat && stat.isDirectory()) {
+                /* Recurse into a subdirectory */
+                results = results.concat(walk(file, ignoreDirs))
+            }
+            else {
+                /* Is a file */
+                results.push(file)
+            }
+        })
+    }
     return results
 }
 
