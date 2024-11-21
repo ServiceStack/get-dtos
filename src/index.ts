@@ -114,6 +114,14 @@ export function parseArgs(...args: string[]) : Command {
     return ret
 }
 
+function logAnyUnknownCommand(command:Command) {
+    if (command.unknown?.length) {
+        console.log(`Unknown Command: ${command.script!.name} ${command.unknown!.join(' ')}\n`)
+        return -1
+    }
+    return 0
+}
+
 var VERBOSE = false
 export async function cli(args: string[]) {
     //var nodeExe = args[0]
@@ -142,12 +150,15 @@ export async function cli(args: string[]) {
         let arg1 = cmdArgs[0] || ""
         console.log(arg1, cmdArgs, ' VERBOSE: ', VERBOSE)
     }
-    
+
+    if (command.unknown?.length) {
+        return execHelp(command)
+    }
+
     try {
         switch (command.type) {
             case "help":
-                execHelp(command)
-                return
+                return execHelp(command)
             case "version":
                 console.log("Version: " + packageConf.version)
                 return
@@ -179,12 +190,6 @@ export async function cli(args: string[]) {
         }
     } catch (e) {
         handleError(e)
-    }
-
-    if (command.unknown?.length) {
-        console.log("Unknown Command: " + command.script!.name + " " + command.unknown!.join(' ') + "\n")
-        execHelp(command)
-        return -1
     }
 }
 
@@ -325,7 +330,9 @@ function walk(dir:string) {
 }
 
 function execHelp(command:Command) {
-    const tool = command.script?.name ?? "npx get-dtos"
+    const exitCode = logAnyUnknownCommand(command)
+
+    const tool = command.script?.name ?? "get-dtos"
     var USAGE = `
 ${tool} <lang>                  Update all ServiceStack References in directory (recursive)
 ${tool} <file>                  Update existing ServiceStack Reference (e.g. dtos.cs)
@@ -352,6 +359,7 @@ This tool collects anonymous usage to determine the most used languages to impro
 To disable set SERVICESTACK_TELEMETRY_OPTOUT=1 environment variable to 1 using your favorite shell.
 `
     console.log(USAGE.trim())
+    return exitCode
 }
 
 function normalizeSwitches(cmd:string) { return cmd.replace(/^-+/, '/') }

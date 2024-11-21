@@ -7,6 +7,12 @@ describe("cli args tests", () => {
         expect(parseArgs("")).toEqual({ type:'help' })
     })
 
+    it ("unknown commands returns help with unknown", () => {
+        expect(parseArgs("unknown")).toEqual({ type:'help', unknown:['unknown'] })
+        expect(parseArgs("unknown commands")).toEqual({ type:'help', unknown:['unknown commands'] })
+        expect(parseArgs("unknown","commands")).toEqual({ type:'help', unknown:['unknown','commands'] })
+    })
+
     it ("arg with language returns update", () => {
         expect(parseArgs("csharp")).toEqual({ type:'update', lang:'csharp' })
         expect(parseArgs("typescript")).toEqual({ type:'update', lang:'typescript' })

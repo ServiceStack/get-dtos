@@ -13,17 +13,17 @@
         "type": "git",
         "url": "git+https://github.com/ServiceStack/get-dtos.git"
     },
-    "bin": "./dist/bin.js",
+    "bin": "./dist/get-dtos.js",
     "main": "./dist/index.js",
     "exports": {
         "import": "./dist/index.js"
     },
     "scripts": {
         "build": "bun run build.ts",
-        "minify": "shx rm -rf ./dist && bun run build && uglifyjs dist/index.js --compress -o dist/index.min.js",
-        "test": "tsx --test --test-concurrency=1",
+        "clean": "shx rm -rf ./dist",
+        "test": "bun test --",
         "prepublishOnly": "bun run build",
-        "release": "bun run minify && bump patch --commit --push --tag && npm publish --access public"
+        "release": "bun run clean && bun run build && bump patch --commit --push --tag && npm publish --access public"
     },
     "keywords": [
         "apis",
