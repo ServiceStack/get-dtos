@@ -1,7 +1,7 @@
 {
     "name": "get-dtos",
     "type": "module",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "Get Typed DTOs for a remote ServiceStack API",
     "license": "BSD-3-Clause",
     "homepage": "https://docs.servicestack.net/add-servicestack-reference",
