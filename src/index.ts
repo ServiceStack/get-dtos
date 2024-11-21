@@ -360,11 +360,13 @@ Options:
         --qs <key=value>      Add query string to Add ServiceStack Reference URL
         --verbose             Display verbose logging
         --ignore-ssl-errors   Ignore SSL Errors
-
-This tool collects anonymous usage to determine the most used languages to improve your experience.
-To disable set SERVICESTACK_TELEMETRY_OPTOUT=1 environment variable to 1 using your favorite shell.
 `
     console.log(USAGE.trim())
+    if (process.env.SERVICESTACK_TELEMETRY_OPTOUT == null) {
+        console.log(`\nThis tool collects anonymous usage to determine the most used languages to improve your experience.
+To disable set SERVICESTACK_TELEMETRY_OPTOUT=1 environment variable to 1 using your favorite shell.`)
+    }
+
     return exitCode
 }
 
