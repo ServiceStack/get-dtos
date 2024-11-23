@@ -223,7 +223,7 @@ async function updateReference(lang:string, target:string) {
     var lines = existingRefSrc.split(/\r?\n/)
     for (let i = 0; i < lines.length; i++) {
         var line = lines[i]
-        if (line.startsWith("*/"))
+        if (line.startsWith("*/") || line.startsWith("*)") || line.startsWith('"""'))
             break
         if (lang === "vbnet") {
             if (line.trim().length === 0)
@@ -234,7 +234,7 @@ async function updateReference(lang:string, target:string) {
         if (line.startsWith("BaseUrl: ")) {
             baseUrl = line.substring("BaseUrl: ".length)
         } else if (baseUrl) {
-            if (!line.startsWith("//") && !line.startsWith("'")) {
+            if (!line.startsWith("//") && !line.startsWith("'") && !line.startsWith("#")) {
                 var parts = splitOnFirst(line, ":")
                 if (parts.length === 2) {
                     var key = parts[0].trim()
