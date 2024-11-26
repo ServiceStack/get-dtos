@@ -257,9 +257,6 @@ async function updateReference(lang:string, target:string) {
         qs += key + "=" + encodeURIComponent(options[key])
     }
     var typesUrl = combinePaths(baseUrl, "/types/" + lang) + qs
-    if (isUrlLocal(typesUrl)) {
-        process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0"        
-    }
 
     await saveReference(lang, typesUrl, target)
 }
@@ -268,7 +265,16 @@ async function saveReference(lang:string, typesUrl:string, fileName:string) {
         console.log('saveReference', lang, typesUrl, fileName)
     var filePath = path.resolve(fileName)
     try {
-        const r = await fetch(typesUrl)
+        let r = null
+        try {
+            r = await fetch(typesUrl)
+        } catch (e) {
+            if (isUrlLocal(typesUrl)) {
+                process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0"        
+                r = await fetch(typesUrl)
+            }
+            else throw e
+        }
         const dtos = await r.text()
         try {
             if (dtos.indexOf("Options:") === -1)
