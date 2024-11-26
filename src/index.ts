@@ -51,6 +51,11 @@ type Command = {
     script?: { name:string, cwd:string }
 }
 
+export function isUrlLocal(url:string) {
+    const localHosts = ["localhost","0.0.0.0","127.0.0.1","10.0.2.2","192.168.0.2"]
+    return localHosts.some(host => url.includes("://" + host))
+}
+
 export function parseArgs(...args: string[]) : Command {
     const ret:Command = { type: "help" }
     for (let i=0; i<args.length; i++) {
@@ -100,8 +105,8 @@ export function parseArgs(...args: string[]) : Command {
                 : arg
             if (hasQs) ret.qs = queryString(arg.substring(arg.indexOf('?')))
             ret.type = "add"
-            const localHosts = ["localhost","0.0.0.0","127.0.0.1","10.0.2.2","192.168.0.2"]
-            if (localHosts.some(host => arg.includes("://" + host))) ret.ignoreSsl = true
+            const isLocal = isUrlLocal(arg)
+            if (isLocal) ret.ignoreSsl = true
             ret.out = REF_EXT[ret.lang!]
         } else if (LANG_EXTS.some(ext => arg.endsWith(ext))) {
             ret.out = arg
@@ -252,6 +257,10 @@ async function updateReference(lang:string, target:string) {
         qs += key + "=" + encodeURIComponent(options[key])
     }
     var typesUrl = combinePaths(baseUrl, "/types/" + lang) + qs
+    if (isUrlLocal(typesUrl)) {
+        process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0"        
+    }
+
     await saveReference(lang, typesUrl, target)
 }
 async function saveReference(lang:string, typesUrl:string, fileName:string) {
