@@ -214,33 +214,31 @@ function handleError(e:any, msg?:string) {
     else console.error(e.message || e)
     process.exit(-1)
 }
-async function updateReference(lang:string, target:string) {
-    if (VERBOSE)
-        console.log('updateReference', lang, target)
-    var targetExt = splitOnLast(target, '.')[1]
-    var langExt = splitOnLast(REF_EXT[lang], '.')[1]
-    if (targetExt != langExt)
-        throw new Error("Invalid file type: '" + target + "', expected '." + langExt + "' source file")
-    var existingRefPath = path.resolve(target)
-    if (!fs.existsSync(existingRefPath))
-        throw new Error("File does not exist: " + existingRefPath.replace(/\\/g, '/'))
-    var existingRefSrc = fs.readFileSync(existingRefPath, 'utf8')
-    var startPos = existingRefSrc.indexOf("Options:")
+
+export function parseOptions(src:string, lang:string, target:string) :[string,Record<string,any>] {
+    var startPos = src.indexOf("Options:")
     if (startPos === -1)
         throw new Error("ERROR: " + target + " is not an existing ServiceStack Reference")
     var options:Record<string,any> = {}
     var baseUrl = ""
-    existingRefSrc = existingRefSrc.substring(startPos)
-    var lines = existingRefSrc.split(/\r?\n/)
+    src = src.substring(startPos)
+    var lines = src.split(/\r?\n/)
     for (let i = 0; i < lines.length; i++) {
         var line = lines[i]
         if (line.startsWith("*/") || line.startsWith("*)") || line.startsWith('"""'))
+            break
+        // Zig uses /// for doc comments, check if line is just /// (end of options block)
+        if (lang === "zig" && line.trim() === "///")
             break
         if (lang === "vbnet") {
             if (line.trim().length === 0)
                 break
             if (line[0] === "'")
                 line = line.substring(1)
+        }
+        // For Zig, strip /// prefix from lines
+        if (lang === "zig" && line.startsWith("/// ")) {
+            line = line.substring(4)
         }
         if (line.startsWith("BaseUrl: ")) {
             baseUrl = line.substring("BaseUrl: ".length)
@@ -255,6 +253,21 @@ async function updateReference(lang:string, target:string) {
             }
         }
     }
+    return [baseUrl, options]
+}
+
+async function updateReference(lang:string, target:string) {
+    if (VERBOSE)
+        console.log('updateReference', lang, target)
+    var targetExt = splitOnLast(target, '.')[1]
+    var langExt = splitOnLast(REF_EXT[lang], '.')[1]
+    if (targetExt != langExt)
+        throw new Error("Invalid file type: '" + target + "', expected '." + langExt + "' source file")
+    var existingRefPath = path.resolve(target)
+    if (!fs.existsSync(existingRefPath))
+        throw new Error("File does not exist: " + existingRefPath.replace(/\\/g, '/'))
+    var existingRefSrc = fs.readFileSync(existingRefPath, 'utf8')
+    var [baseUrl, options] = parseOptions(existingRefSrc, lang, target)
     if (!baseUrl)
         throw new Error("ERROR: Could not find baseUrl in " + target);
     var qs = "";
