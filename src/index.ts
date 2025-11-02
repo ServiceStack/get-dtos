@@ -18,6 +18,8 @@ const ALIAS:Record<string,any> = {
     "ja":  "java",
     "da":  "dart",
     "javascript":  "mjs",
+    "rb":  "ruby",
+    "rs":  "rust",
 }
 const REF_EXT:Record<string,any> = {
     "csharp":       "dtos.cs",
@@ -32,6 +34,10 @@ const REF_EXT:Record<string,any> = {
     "swift":        "dtos.swift",
     "fsharp":       "dtos.fs",
     "vbnet":        "dtos.vb",
+    "go":           "dtos.go",
+    "ruby":         "dtos.rb",
+    "rust":         "dtos.rs",
+    "zig":          "dtos.zig",
 }
 const LANGS = Object.keys(REF_EXT)
 const LANG_EXTS = Object.values(REF_EXT)

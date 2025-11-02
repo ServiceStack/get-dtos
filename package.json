@@ -2,16 +2,16 @@
     "name": "get-dtos",
     "type": "module",
     "version": "0.0.9",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ServiceStack/get-dtos.git"
+    },
     "description": "Get Typed DTOs for a remote ServiceStack API",
     "license": "BSD-3-Clause",
     "homepage": "https://docs.servicestack.net/add-servicestack-reference",
     "author": "ServiceStack, Inc. (https://servicestack.net)",
     "bugs": {
         "url": "https://github.com/ServiceStack/Issues"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/ServiceStack/get-dtos.git"
     },
     "bin": "./dist/get-dtos.js",
     "main": "./dist/index.js",
@@ -24,7 +24,7 @@
         "test": "bun test --",
         "prepublishOnly": "bun run build",
         "update-deps": "npx npm-check-updates -u && npm install",
-        "release": "bun run clean && bun run build && bump patch --commit --push --tag && npm publish --access public"
+        "bump": "npx bump && git add . && git commit -m 'bump version' && git push && git push --tags"
     },
     "keywords": [
         "apis",

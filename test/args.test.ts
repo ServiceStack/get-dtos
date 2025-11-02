@@ -26,6 +26,10 @@ describe("cli args tests", () => {
         expect(parseArgs("swift")).toEqual({ type:'update', lang:'swift' })
         expect(parseArgs("fsharp")).toEqual({ type:'update', lang:'fsharp' })
         expect(parseArgs("vbnet")).toEqual({ type:'update', lang:'vbnet' })
+        expect(parseArgs("go")).toEqual({ type:'update', lang:'go' })
+        expect(parseArgs("ruby")).toEqual({ type:'update', lang:'ruby' })
+        expect(parseArgs("rust")).toEqual({ type:'update', lang:'rust' })
+        expect(parseArgs("zig")).toEqual({ type:'update', lang:'zig' })
     })
 
     it ("arg with language ext returns update", () => {
@@ -39,6 +43,8 @@ describe("cli args tests", () => {
         expect(parseArgs("fs")).toEqual({ type:'update', lang:'fsharp' })
         expect(parseArgs("vb")).toEqual({ type:'update', lang:'vbnet' })
         expect(parseArgs("javascript")).toEqual({ type:'update', lang:'mjs' })
+        expect(parseArgs("rb")).toEqual({ type:'update', lang:'ruby' })
+        expect(parseArgs("rs")).toEqual({ type:'update', lang:'rust' })
     })
 
     it ("arg with language and url returns add", () => {
@@ -55,6 +61,10 @@ describe("cli args tests", () => {
         expect(parseArgs("swift", url)).toEqual({ type:'add', lang:'swift', out:'dtos.swift', url })
         expect(parseArgs("fsharp", url)).toEqual({ type:'add', lang:'fsharp', out:'dtos.fs', url })
         expect(parseArgs("vbnet", url)).toEqual({ type:'add', lang:'vbnet', out:'dtos.vb', url })
+        expect(parseArgs("go", url)).toEqual({ type:'add', lang:'go', out:'dtos.go', url })
+        expect(parseArgs("ruby", url)).toEqual({ type:'add', lang:'ruby', out:'dtos.rb', url })
+        expect(parseArgs("rust", url)).toEqual({ type:'add', lang:'rust', out:'dtos.rs', url })
+        expect(parseArgs("zig", url)).toEqual({ type:'add', lang:'zig', out:'dtos.zig', url })
     })
 
     it ("arg with language, url and -include returns add", () => {
