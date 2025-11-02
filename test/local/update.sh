@@ -1,0 +1,15 @@
+../../dist/get-dtos.js csharp
+../../dist/get-dtos.js dart
+../../dist/get-dtos.js fsharp
+../../dist/get-dtos.js java
+../../dist/get-dtos.js kotlin
+../../dist/get-dtos.js mjs
+../../dist/get-dtos.js php
+../../dist/get-dtos.js python
+../../dist/get-dtos.js swift
+../../dist/get-dtos.js typescript
+../../dist/get-dtos.js vb
+../../dist/get-dtos.js go
+../../dist/get-dtos.js ruby
+../../dist/get-dtos.js rust
+../../dist/get-dtos.js zig

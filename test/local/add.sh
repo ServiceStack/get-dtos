@@ -1,0 +1,15 @@
+../../dist/get-dtos.js csharp https://localhost:5001
+../../dist/get-dtos.js dart https://localhost:5001
+../../dist/get-dtos.js fsharp https://localhost:5001
+../../dist/get-dtos.js java https://localhost:5001
+../../dist/get-dtos.js kotlin https://localhost:5001
+../../dist/get-dtos.js mjs https://localhost:5001
+../../dist/get-dtos.js php https://localhost:5001
+../../dist/get-dtos.js python https://localhost:5001
+../../dist/get-dtos.js swift https://localhost:5001
+../../dist/get-dtos.js typescript https://localhost:5001
+../../dist/get-dtos.js vb https://localhost:5001
+../../dist/get-dtos.js go https://localhost:5001
+../../dist/get-dtos.js ruby https://localhost:5001
+../../dist/get-dtos.js rust https://localhost:5001
+../../dist/get-dtos.js zig https://localhost:5001
