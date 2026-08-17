@@ -385,9 +385,13 @@ ${tool} javascript <url>        Add JavaScript ServiceStack Reference    (Alias 
 ${tool} python     <url>        Add Python ServiceStack Reference        (Alias 'py')
 ${tool} dart       <url>        Add Dart ServiceStack Reference          (Alias 'da')
 ${tool} php        <url>        Add PHP ServiceStack Reference           (Alias 'ph')
+${tool} ruby       <url>        Add Ruby ServiceStack Reference          (Alias 'rb')
 ${tool} java       <url>        Add Java ServiceStack Reference          (Alias 'ja')
 ${tool} kotlin     <url>        Add Kotlin ServiceStack Reference        (Alias 'kt')
 ${tool} swift      <url>        Add Swift ServiceStack Reference         (Alias 'sw')
+${tool} go         <url>        Add Go ServiceStack Reference            (Alias 'go')
+${tool} rust       <url>        Add Rust ServiceStack Reference          (Alias 'rs')
+${tool} zig        <url>        Add Zig ServiceStack Reference           (Alias 'zg')
 ${tool} fsharp     <url>        Add F# ServiceStack Reference            (Alias 'fs')
 ${tool} vbnet      <url>        Add VB.NET ServiceStack Reference        (Alias 'vb')
 ${tool} tsd        <url>        Add TypeScript Definition ServiceStack Reference    
